@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Conectar - RedSOS</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/estilo.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <span class="navbar-brand">RedSOS · Punto de ayuda</span>
+      <span id="insignia-red" class="badge text-bg-secondary">...</span>
+    </div>
+  </nav>
+
+  <main class="container py-4" style="max-width: 760px;">
+    <div class="alert alert-success">RedSOS está encendido. Muestra esta pantalla para que la gente se conecte.</div>
+
+    <div class="row g-3 text-center">
+      <div class="col-md-6">
+        <div class="card h-100"><div class="card-body">
+          <h2 class="h5">1. Conectarse a la red Wi-Fi</h2>
+          <img id="qr-wifi" alt="QR de la red Wi-Fi" class="img-fluid" style="max-width:260px">
+          <p class="mb-0 mt-2">Red: <strong id="red"></strong></p>
+          <p class="mb-0" id="clave-linea"></p>
+        </div></div>
+      </div>
+      <div class="col-md-6">
+        <div class="card h-100"><div class="card-body">
+          <h2 class="h5">2. Abrir RedSOS</h2>
+          <img id="qr-url" alt="QR de la página" class="img-fluid" style="max-width:260px">
+          <p class="mb-0 mt-2">Dirección: <strong id="url"></strong></p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2 mt-4">
+      <a class="btn btn-dark flex-fill" href="/brigadista.html">Abrir panel del brigadista</a>
+      <a class="btn btn-outline-secondary flex-fill" href="/">Ver inicio del ciudadano</a>
+    </div>
+    <p class="text-muted small mt-3 mb-0" id="otras"></p>
+  </main>
+
+  <script src="/js/comun.js"></script>
+  <script>
+    (async () => {
+      const info = await (await fetch('/api/info')).json();
+      const qr = (t) => '/api/qr.svg?t=' + encodeURIComponent(t);
+      document.getElementById('red').textContent = info.red;
+      document.getElementById('clave-linea').innerHTML = info.clave
+        ? 'Contraseña: <strong></strong>' : 'Red abierta (sin contraseña)';
+      if (info.clave) document.querySelector('#clave-linea strong').textContent = info.clave;
+      document.getElementById('qr-wifi').src = qr(info.wifi);
+      if (info.urls.length) {
+        document.getElementById('url').textContent = info.urls[0];
+        document.getElementById('qr-url').src = qr(info.urls[0]);
+        if (info.urls.length > 1) {
+          document.getElementById('otras').textContent =
+            'Si no abre, prueba con: ' + info.urls.slice(1).join(' · ');
+        }
+      } else {
+        document.getElementById('url').textContent = 'No se detectó red: enciende el hotspot';
+      }
+    })();
+  </script>
+</body>
+</html>

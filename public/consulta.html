@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Estado de mi solicitud - RedSOS</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/estilo.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">RedSOS</a>
+      <span id="insignia-red" class="badge text-bg-secondary">...</span>
+    </div>
+  </nav>
+
+  <main class="container py-4" style="max-width: 560px;">
+    <h1 class="h4 mb-3">Estado de mi solicitud</h1>
+    <form id="form" class="input-group input-group-lg mb-3">
+      <input class="form-control text-uppercase" id="codigo" placeholder="RS-0001" maxlength="10" autocomplete="off">
+      <button class="btn btn-primary" type="submit">Consultar</button>
+    </form>
+
+    <div id="resultado" class="d-none card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5" id="r-codigo"></h2>
+        <p class="mb-1"><strong>Necesidad:</strong> <span id="r-tipo"></span></p>
+        <p class="mb-1"><strong>Sector:</strong> <span id="r-sector"></span></p>
+        <p class="mb-2"><strong>Urgencia:</strong> <span id="r-urgencia" class="badge"></span></p>
+        <p class="mb-0"><strong>Estado:</strong> <span id="r-estado" class="badge text-bg-secondary"></span></p>
+      </div>
+    </div>
+    <div id="error" class="alert alert-danger d-none" role="alert"></div>
+  </main>
+
+  <script src="/js/comun.js"></script>
+  <script>
+    const form = document.getElementById('form');
+    const resultado = document.getElementById('resultado');
+    const error = document.getElementById('error');
+    const colorEstado = { pendiente: 'text-bg-secondary', en_atencion: 'text-bg-primary', resuelta: 'text-bg-success' };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      resultado.classList.add('d-none'); error.classList.add('d-none');
+      const codigo = document.getElementById('codigo').value.trim();
+      if (!codigo) return;
+      try {
+        const r = await fetch('/api/solicitudes/' + encodeURIComponent(codigo));
+        const s = await r.json();
+        if (!r.ok) throw new Error(s.error || 'Error al consultar.');
+        document.getElementById('r-codigo').textContent = s.codigo;
+        document.getElementById('r-tipo').textContent = ETIQUETA_TIPO[s.tipo] || s.tipo;
+        document.getElementById('r-sector').textContent = s.sector;
+        const u = document.getElementById('r-urgencia');
+        u.textContent = s.urgencia.toUpperCase();
+        u.className = 'badge badge-' + s.urgencia;
+        const est = document.getElementById('r-estado');
+        est.textContent = ETIQUETA_ESTADO[s.estado];
+        est.className = 'badge ' + colorEstado[s.estado];
+        resultado.classList.remove('d-none');
+      } catch (err) {
+        error.textContent = err.message;
+        error.classList.remove('d-none');
+      }
+    });
+  </script>
+</body>
+</html>

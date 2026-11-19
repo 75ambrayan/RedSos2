@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Panel del brigadista - RedSOS</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/estilo.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">RedSOS · Brigadistas</a>
+      <span id="insignia-red" class="badge text-bg-secondary">...</span>
+    </div>
+  </nav>
+
+  <!-- Login (US-09) -->
+  <main id="vista-login" class="container py-4" style="max-width: 420px;">
+    <h1 class="h4 mb-3">Acceso brigadistas</h1>
+    <form id="form-login" class="vstack gap-3">
+      <input class="form-control form-control-lg" id="usuario" placeholder="Usuario"
+             autocomplete="username" autocapitalize="none">
+      <input class="form-control form-control-lg" id="clave" type="password" placeholder="Contraseña"
+             autocomplete="current-password">
+      <div id="error-login" class="alert alert-danger d-none mb-0" role="alert"></div>
+      <button class="btn btn-dark btn-lg" type="submit">Entrar</button>
+    </form>
+  </main>
+
+  <!-- Panel -->
+  <main id="vista-panel" class="container py-3 d-none">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <span>Sesión: <strong id="nombre-brigadista"></strong></span>
+      <button class="btn btn-sm btn-outline-secondary" id="salir">Salir</button>
+    </div>
+
+    <div class="row g-2 text-center mb-3">
+      <div class="col-4"><div class="card"><div class="card-body py-2"><div class="h3 mb-0" id="c-pendientes">0</div><small>Pendientes</small></div></div></div>
+      <div class="col-4"><div class="card"><div class="card-body py-2"><div class="h3 mb-0" id="c-atencion">0</div><small>En atención</small></div></div></div>
+      <div class="col-4"><div class="card"><div class="card-body py-2"><div class="h3 mb-0" id="c-resueltas">0</div><small>Resueltas</small></div></div></div>
+    </div>
+
+    <div class="d-flex gap-2 mb-2">
+      <select id="f-urgencia" class="form-select form-select-sm" aria-label="Filtrar por urgencia">
+        <option value="">Urgencia</option><option value="alta">Alta</option>
+        <option value="media">Media</option><option value="baja">Baja</option>
+      </select>
+      <select id="f-estado" class="form-select form-select-sm" aria-label="Filtrar por estado">
+        <option value="">Estado</option><option value="pendiente">Pendiente</option>
+        <option value="en_atencion">En atención</option><option value="resuelta">Resuelta</option>
+      </select>
+      <button class="btn btn-sm btn-outline-dark text-nowrap" id="btn-alerta">🔔 Activar alertas</button>
+    </div>
+
+    <div id="alerta-nueva" class="alert alert-danger d-none fw-semibold" role="alert"></div>
+    <div id="aviso" class="alert alert-warning d-none" role="alert"></div>
+    <div id="lista" class="vstack gap-2"></div>
+    <p id="vacio" class="text-center text-muted d-none">No hay solicitudes con ese filtro.</p>
+    <p class="text-center text-muted small mt-3">Se actualiza solo cada 3 segundos. Toca una tarjeta para ver el detalle.</p>
+  </main>
+
+  <script src="/js/comun.js"></script>
+  <script src="/js/panel.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+body { background: #f4f6f8; }
+.navbar-brand { font-weight: 700; letter-spacing: .5px; }
+.btn-ayuda { font-size: 1.4rem; padding: 1.1rem; }
+.opcion-tipo { font-size: 1.05rem; padding: .9rem .5rem; }
+.badge-alta  { background: #dc3545; }
+.badge-media { background: #ffc107; color: #212529; }
+.badge-baja  { background: #198754; }
+.fila-alta  { border-left: 6px solid #dc3545; }
+.fila-media { border-left: 6px solid #ffc107; }
+.fila-baja  { border-left: 6px solid #198754; }
+.codigo-grande { font-size: 2.6rem; font-weight: 800; letter-spacing: 2px; }

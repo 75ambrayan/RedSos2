@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pedir ayuda - RedSOS</title>
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/estilo.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">RedSOS</a>
+      <span id="insignia-red" class="badge text-bg-secondary">...</span>
+    </div>
+  </nav>
+
+  <main class="container py-4" style="max-width: 560px;">
+
+    <!-- Formulario -->
+    <form id="form" novalidate>
+      <h1 class="h4 mb-3">Pedir ayuda</h1>
+
+      <label class="form-label fw-semibold">1. ¿Qué necesitas?</label>
+      <div class="row g-2 mb-3" id="tipos">
+        <div class="col-6"><input type="radio" class="btn-check" name="tipo" id="t1" value="agua"><label class="btn btn-outline-primary w-100 opcion-tipo" for="t1">Agua</label></div>
+        <div class="col-6"><input type="radio" class="btn-check" name="tipo" id="t2" value="alimentos"><label class="btn btn-outline-primary w-100 opcion-tipo" for="t2">Alimentos</label></div>
+        <div class="col-6"><input type="radio" class="btn-check" name="tipo" id="t3" value="medicamentos"><label class="btn btn-outline-primary w-100 opcion-tipo" for="t3">Medicamentos</label></div>
+        <div class="col-6"><input type="radio" class="btn-check" name="tipo" id="t4" value="persona_herida"><label class="btn btn-outline-primary w-100 opcion-tipo" for="t4">Persona herida</label></div>
+        <div class="col-12"><input type="radio" class="btn-check" name="tipo" id="t5" value="otro"><label class="btn btn-outline-primary w-100 opcion-tipo" for="t5">Otro</label></div>
+      </div>
+
+      <label class="form-label fw-semibold" for="sector">2. ¿Dónde estás?</label>
+      <input class="form-control form-control-lg mb-3" id="sector" list="sectores"
+             maxlength="80" placeholder="Sector, barrio o referencia" autocomplete="off">
+      <datalist id="sectores">
+        <option value="Sector Norte"><option value="Sector Sur">
+        <option value="Sector Centro"><option value="Barrio San Juan">
+      </datalist>
+
+      <label class="form-label fw-semibold">3. ¿Qué tan urgente es?</label>
+      <div class="row g-2 mb-3">
+        <div class="col-4"><input type="radio" class="btn-check" name="urgencia" id="u1" value="alta"><label class="btn btn-outline-danger w-100 opcion-tipo" for="u1">Alta</label></div>
+        <div class="col-4"><input type="radio" class="btn-check" name="urgencia" id="u2" value="media"><label class="btn btn-outline-warning w-100 opcion-tipo" for="u2">Media</label></div>
+        <div class="col-4"><input type="radio" class="btn-check" name="urgencia" id="u3" value="baja"><label class="btn btn-outline-success w-100 opcion-tipo" for="u3">Baja</label></div>
+      </div>
+
+      <label class="form-label fw-semibold" for="detalle">Detalle (opcional)</label>
+      <textarea class="form-control mb-3" id="detalle" rows="2" maxlength="300"
+                placeholder="Ej: 2 niños y un adulto mayor"></textarea>
+
+      <div id="error" class="alert alert-danger d-none" role="alert"></div>
+      <button class="btn btn-danger btn-ayuda w-100" type="submit" id="enviar">Enviar solicitud</button>
+    </form>
+
+    <!-- Confirmación -->
+    <section id="confirmacion" class="text-center d-none">
+      <h1 class="h4 text-success mb-3">Solicitud recibida</h1>
+      <p class="mb-1">Tu código es:</p>
+      <div class="codigo-grande mb-2" id="codigo"></div>
+      <p class="mb-1">Estado: <span class="badge text-bg-secondary">Pendiente</span></p>
+      <p class="text-muted">Anota tu código para consultar cómo va tu solicitud.</p>
+      <a href="/" class="btn btn-outline-secondary w-100 mt-2">Volver al inicio</a>
+    </section>
+  </main>
+
+  <script src="/js/comun.js"></script>
+  <script src="/js/ayuda.js"></script>
+</body>
+</html>

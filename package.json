@@ -1,0 +1,22 @@
+{
+  "name": "redsos",
+  "version": "0.1.0",
+  "description": "RedSOS - Sistema local de comunicación y gestión de emergencias (laptop del punto de ayuda)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "seed": "node scripts/seed.js",
+    "brigadista": "node scripts/brigadista.js"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^5.3.8",
+    "express": "^5.3.0",
+    "qrcode": "^1.5.4"
+  },
+  "engines": {
+    "node": ">=22.13"
+  }
+}
